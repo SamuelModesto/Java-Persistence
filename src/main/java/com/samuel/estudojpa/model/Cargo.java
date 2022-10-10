@@ -1,7 +1,11 @@
 package com.samuel.estudojpa.model;
 
-import javax.persistence.*;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Data
 @Entity
 @Table (name = "cargos")
 public class Cargo {
@@ -12,19 +16,7 @@ public class Cargo {
 
     private String descricao;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany (mappedBy = "cargo")
+    private List<Funcionario> funcionario;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 }

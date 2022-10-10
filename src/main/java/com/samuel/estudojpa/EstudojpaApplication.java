@@ -2,29 +2,59 @@ package com.samuel.estudojpa;
 
 import com.samuel.estudojpa.model.Cargo;
 import com.samuel.estudojpa.repository.CargoRepository;
+import com.samuel.estudojpa.service.CargoService;
+import com.samuel.estudojpa.service.FuncionarioService;
+import com.samuel.estudojpa.service.UnidadeDeTrabalhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Scanner;
+
 @SpringBootApplication
 public class EstudojpaApplication implements CommandLineRunner {
 
-	final
-	CargoRepository repository;
+    @Autowired
+    private CargoService cargoService;
+    @Autowired
+    private UnidadeDeTrabalhoService unidadeDeTrabalhoService;
 
-	public EstudojpaApplication(CargoRepository repository) {
-		this.repository = repository;
-	}
+    @Autowired
+    private FuncionarioService funcionarioService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(EstudojpaApplication.class, args);
-	}
+    Boolean system = true;
 
-	@Override
-	public void run(String... args) throws Exception {
-		Cargo cargo = new Cargo();
-		cargo.setDescricao("DESENVOLVEDOR DE SOFTWARE");
-		repository.save(cargo);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EstudojpaApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+
+        while (system) {
+            System.out.println("Qual ação tomar?");
+            System.out.println("0 - Sair");
+            System.out.println("1 - Cargo");
+            System.out.println("2 - Unidades De Trabalho");
+            System.out.println("3 - Funcionarios");
+
+            int acao = scanner.nextInt();
+
+            switch (acao) {
+                case 1:
+                    cargoService.menuInicial(scanner);
+                    break;
+                case 2:
+                    unidadeDeTrabalhoService.menuInicial(scanner);
+                    break;
+                case 3:
+                    funcionarioService.menuInicial(scanner);
+                    break;
+                case 0:
+                    system = false;
+            }
+        }
+    }
 }
