@@ -90,7 +90,6 @@ public class FuncionarioService {
         System.out.println("Salvo");
     }
 
-
     private void atualizarFuncionario(Scanner scanner) {
         System.out.println("Digite o id");
         Long id = scanner.nextLong();

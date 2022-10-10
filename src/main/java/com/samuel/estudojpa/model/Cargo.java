@@ -5,9 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
 @Entity
-@Table (name = "cargos")
+@Table(name = "cargos")
 public class Cargo {
 
     @Id
@@ -16,7 +15,39 @@ public class Cargo {
 
     private String descricao;
 
-    @OneToMany (mappedBy = "cargo")
+    @OneToMany(mappedBy = "cargo")
     private List<Funcionario> funcionario;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public List<Funcionario> getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(List<Funcionario> funcionario) {
+        this.funcionario = funcionario;
+    }
+
+    @Override
+    public String toString() {
+        return "Cargo{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", funcionario=" + funcionario +
+                '}';
+    }
 }
