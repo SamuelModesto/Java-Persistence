@@ -22,7 +22,7 @@ public class CargoService {
             System.out.println("1 - Salvar");
             System.out.println("2 - Atualizar");
             System.out.println("3 - Visualizar Todos");
-            System.out.println("4 - Deletar Cargo1");
+            System.out.println("4 - Deletar Cargo: ");
 
             int acao = scanner.nextInt();
 

@@ -3,6 +3,8 @@ package com.samuel.estudojpa;
 import com.samuel.estudojpa.model.Cargo;
 import com.samuel.estudojpa.repository.CargoRepository;
 import com.samuel.estudojpa.service.CargoService;
+import com.samuel.estudojpa.service.FuncionarioService;
+import com.samuel.estudojpa.service.UnidadeDeTrabalhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +17,11 @@ public class EstudojpaApplication implements CommandLineRunner {
 
     @Autowired
     private CargoService cargoService;
+    @Autowired
+    private UnidadeDeTrabalhoService unidadeDeTrabalhoService;
+
+    @Autowired
+    private FuncionarioService funcionarioService;
 
     Boolean system = true;
 
@@ -30,12 +37,20 @@ public class EstudojpaApplication implements CommandLineRunner {
             System.out.println("Qual ação tomar?");
             System.out.println("0 - Sair");
             System.out.println("1 - Cargo");
+            System.out.println("2 - Unidades De Trabalho");
+            System.out.println("3 - Funcionarios");
 
             int acao = scanner.nextInt();
 
             switch (acao) {
                 case 1:
                     cargoService.menuInicial(scanner);
+                    break;
+                case 2:
+                    unidadeDeTrabalhoService.menuInicial(scanner);
+                    break;
+                case 3:
+                    funcionarioService.menuInicial(scanner);
                     break;
                 case 0:
                     system = false;
