@@ -2,8 +2,21 @@ package com.samuel.estudojpa.repository;
 
 import com.samuel.estudojpa.model.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
+
+    List<Funcionario> findByNome(String nome);
+
+    @Query("select f from Funcionario f where f.nome = :nomeArg" +
+            " and f.salario >= :salarioArg and f.dataContratacao = :dataArg")
+    List<Funcionario> findByNomeDataContratacaoSalario(String nomeArg, Double salarioArg, LocalDate dataArg);
+
+    @Query(value = "select * from funcionarios f where f.data_contratacao >= :dataArg", nativeQuery = true)
+    List<Funcionario>findDataContratacao(LocalDate dataArg);
 }
