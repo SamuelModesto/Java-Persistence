@@ -1,9 +1,10 @@
 package com.samuel.estudojpa.repository;
 
 import com.samuel.estudojpa.model.Funcionario;
+import com.samuel.estudojpa.model.projecoes.FuncionarioProjecao;
+import com.samuel.estudojpa.model.projecoes.FuncionarioProjecaoDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -39,4 +40,11 @@ public interface FuncionarioRepository extends PagingAndSortingRepository<Funcio
 
     @Query(value = "select * from funcionarios f where f.data_contratacao >= :dataArg", nativeQuery = true)
     List<Funcionario> findDataContratacao(LocalDate dataArg);
+
+    //projeções
+    @Query(value = "SELECT f.id, f.nome, f.salario FROM funcionarios f", nativeQuery = true)
+    List<FuncionarioProjecao> findFuncionarioPorIdNomeESalario();
+
+    @Query(value = "SELECT NEW com.samuel.estudojpa.model.projecoes.FuncionarioProjecaoDto (f.nome, f.cpf) FROM Funcionario f")
+    List<FuncionarioProjecaoDto> findFuncionarioPorNomeECpf();
 }
