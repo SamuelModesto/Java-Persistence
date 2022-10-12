@@ -32,7 +32,7 @@ public class FuncionarioService {
 
     public void menuInicial(Scanner scanner) {
         while (system) {
-            System.out.println("Qual ação de unidade de trabalho deseja executar? ");
+            System.out.println("Qual ação de funcionario deseja executar? ");
             System.out.println("0 - Sair");
             System.out.println("1 - Salvar");
             System.out.println("2 - Atualizar");
