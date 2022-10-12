@@ -42,6 +42,7 @@ public class FuncionarioService {
             System.out.println("2 - Atualizar");
             System.out.println("3 - Visualizar Todos");
             System.out.println("4 - Deletar unidade de trabalho: ");
+            System.out.println("5 - Visualizar Todos os funcionarios ordenados por salario ");
             int acao = scanner.nextInt();
 
             switch (acao) {
@@ -56,6 +57,9 @@ public class FuncionarioService {
                     break;
                 case 4:
                     deletarFuncionario(scanner);
+                    break;
+                case 5:
+                    visualizarTodosOsFuncionariosOrdenadosPorSalario(scanner);
                     break;
                 default:
                     system = false;
@@ -130,6 +134,19 @@ public class FuncionarioService {
         System.out.println("Digite a pagina que deseja visualizar");
         int page = scanner.nextInt();
         Pageable pageable = PageRequest.of(page, 2, Sort.unsorted());
+        buscarTodosFuncionarios(pageable);
+    }
+
+    public void visualizarTodosOsFuncionariosOrdenadosPorSalario(Scanner scanner) {
+        System.out.println("Digite a pagina que deseja visualizar");
+        int page = scanner.nextInt();
+        Pageable pageable = PageRequest.of(page, 6, Sort.by(Sort.Direction.ASC, "salario"));
+        buscarTodosFuncionarios(pageable);
+
+
+    }
+
+    private void buscarTodosFuncionarios(Pageable pageable) {
         Page<Funcionario> funcionarios = funcionarioRepository.findAll(pageable);
         System.out.println(funcionarios);
         System.out.println("Pagina atual: " + funcionarios.getNumber());
