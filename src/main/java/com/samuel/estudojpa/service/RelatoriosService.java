@@ -3,6 +3,10 @@ package com.samuel.estudojpa.service;
 import com.samuel.estudojpa.model.Funcionario;
 import com.samuel.estudojpa.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -80,7 +84,13 @@ public class RelatoriosService {
     public void buscarFuncionarioPeloNome(Scanner scanner) {
         System.out.println("Digite o nome que deseja pesquisar: ");
         String nome = scanner.next();
-        List<Funcionario> funcionarios = funcionarioRepository.findByNome(nome);
+        System.out.println("Digite a pagina que deseja visualizar");
+        int page = scanner.nextInt();
+        Pageable pageable = PageRequest.of(page, 2, Sort.unsorted());
+        Page<Funcionario> funcionarios = funcionarioRepository.findByNome(nome, pageable);
+        System.out.println(funcionarios);
+        System.out.println("Pagina atual: " + funcionarios.getNumber());
+        System.out.println("Quantidade total de elementos da consulta: " + funcionarios.getTotalElements());
         funcionarios.forEach(System.out::println);
     }
 
