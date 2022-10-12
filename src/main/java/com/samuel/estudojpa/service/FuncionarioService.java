@@ -7,6 +7,10 @@ import com.samuel.estudojpa.repository.CargoRepository;
 import com.samuel.estudojpa.repository.FuncionarioRepository;
 import com.samuel.estudojpa.repository.UnidadeDeTrabalhoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -48,7 +52,7 @@ public class FuncionarioService {
                     atualizarFuncionario(scanner);
                     break;
                 case 3:
-                    visualizarTodosOsFuncionarios();
+                    visualizarTodosOsFuncionarios(scanner);
                     break;
                 case 4:
                     deletarFuncionario(scanner);
@@ -122,9 +126,15 @@ public class FuncionarioService {
 
     }
 
-    private void visualizarTodosOsFuncionarios() {
-        Iterable<Funcionario> funcionarios = funcionarioRepository.findAll();
-        funcionarios.forEach(funcionario -> System.out.println(funcionario));
+    private void visualizarTodosOsFuncionarios(Scanner scanner) {
+        System.out.println("Digite a pagina que deseja visualizar");
+        int page = scanner.nextInt();
+        Pageable pageable = PageRequest.of(page, 2, Sort.unsorted());
+        Page<Funcionario> funcionarios = funcionarioRepository.findAll(pageable);
+        System.out.println(funcionarios);
+        System.out.println("Pagina atual: " + funcionarios.getNumber());
+        System.out.println("Quantidade total de elementos da consulta: " + funcionarios.getTotalElements());
+        funcionarios.forEach(System.out::println);
     }
 
     private void deletarFuncionario(Scanner scanner) {
@@ -142,7 +152,7 @@ public class FuncionarioService {
             System.out.println("Digite o unidadeId (Para sair digite 0)");
             Long idUnidade = scanner.nextLong();
 
-            if(idUnidade != 0) {
+            if (idUnidade != 0) {
                 Optional<UnidadeDeTrabalho> unidade = unidadeTrabalhoRepository.findById(idUnidade);
                 unidades.add(unidade.get());
             } else {
