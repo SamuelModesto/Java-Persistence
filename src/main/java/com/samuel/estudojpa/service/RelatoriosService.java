@@ -1,6 +1,8 @@
 package com.samuel.estudojpa.service;
 
 import com.samuel.estudojpa.model.Funcionario;
+import com.samuel.estudojpa.model.projecoes.FuncionarioProjecao;
+import com.samuel.estudojpa.model.projecoes.FuncionarioProjecaoDto;
 import com.samuel.estudojpa.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,8 @@ public class RelatoriosService {
             System.out.println("9 - Pesquisar funcionarios por nome e ordenar por data de contratacao.");
             System.out.println("10 - Pesquisar funcionarios por cargo.");
             System.out.println("11 - Pesquisar funcionarios por unidade de trabalho.");
+            System.out.println("12 - Pesquisar funcionarios com filtro de id, nome e salario.");
+            System.out.println("13 - Pesquisar funcionarios com filtro de nome e cpf.");
 
             int acao = scanner.nextInt();
 
@@ -74,6 +78,12 @@ public class RelatoriosService {
                     break;
                 case 11:
                     buscarFuncionarioPorUnidadeDeTrabalho(scanner);
+                    break;
+                case 12:
+                    buscarTodosOsFuncionariosComFiltroDeIdNomeESalario();
+                    break;
+                case 13:
+                    buscarTodosOsFuncionariosComFiltroDeNomeECpf();
                     break;
                 default:
                     system = false;
@@ -166,6 +176,16 @@ public class RelatoriosService {
 
         List<Funcionario> funcionarios = funcionarioRepository.findDataContratacao(localDate);
         funcionarios.forEach(System.out::println);
+    }
+
+    public void buscarTodosOsFuncionariosComFiltroDeIdNomeESalario() {
+        List<FuncionarioProjecao> funcionarios = funcionarioRepository.findFuncionarioPorIdNomeESalario();
+        funcionarios.forEach(e -> System.out.println(" id: " + e.getId() + " nome: " + e.getNome() + " salario: " + e.getSalario()));
+    }
+
+    public void buscarTodosOsFuncionariosComFiltroDeNomeECpf() {
+        List<FuncionarioProjecaoDto> funcionarios = funcionarioRepository.findFuncionarioPorNomeECpf();
+        funcionarios.forEach(e -> System.out.println(" nome: " + e.getNome() + " cpf: " + e.getCpf()));
     }
 
 }

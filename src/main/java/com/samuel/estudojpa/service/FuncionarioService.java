@@ -142,8 +142,6 @@ public class FuncionarioService {
         int page = scanner.nextInt();
         Pageable pageable = PageRequest.of(page, 6, Sort.by(Sort.Direction.ASC, "salario"));
         buscarTodosFuncionarios(pageable);
-
-
     }
 
     private void buscarTodosFuncionarios(Pageable pageable) {
