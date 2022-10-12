@@ -25,6 +25,11 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 
     List<Funcionario> findByNomeOrderByDataContratacaoAsc(String nome);
 
+    //usando join (camelCase)
+    List<Funcionario> findByCargoDescricao(String descricao);
+
+    List<Funcionario> findByUnidadesDeTrabalho_Descricao(String descricao);
+
     @Query("select f from Funcionario f where f.nome = :nomeArg" +
             " and f.salario >= :salarioArg and f.dataContratacao = :dataArg")
     List<Funcionario> findByNomeDataContratacaoSalario(String nomeArg, Double salarioArg, LocalDate dataArg);

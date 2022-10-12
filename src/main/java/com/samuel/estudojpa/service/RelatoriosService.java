@@ -32,6 +32,8 @@ public class RelatoriosService {
             System.out.println("7 - Pesquisar funcionarios com nome nulo.");
             System.out.println("8 - Pesquisar funcionarios com nome Não nulo.");
             System.out.println("9 - Pesquisar funcionarios por nome e ordenar por data de contratacao.");
+            System.out.println("10 - Pesquisar funcionarios por cargo.");
+            System.out.println("11 - Pesquisar funcionarios por unidade de trabalho.");
 
             int acao = scanner.nextInt();
 
@@ -62,6 +64,12 @@ public class RelatoriosService {
                     break;
                 case 9:
                     buscarFuncionarioPorNomeEOrdenarPorDataDeContratacao(scanner);
+                    break;
+                case 10:
+                    buscarFuncionarioPorCargo(scanner);
+                    break;
+                case 11:
+                    buscarFuncionarioPorUnidadeDeTrabalho(scanner);
                     break;
                 default:
                     system = false;
@@ -111,6 +119,19 @@ public class RelatoriosService {
         System.out.println("Digite o nome que deseja pesquisar: ");
         String nome = scanner.next();
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeOrderByDataContratacaoAsc(nome);
+        funcionarios.forEach(System.out::println);
+    }
+
+    public void buscarFuncionarioPorCargo(Scanner scanner){
+        System.out.println("Digite o cargo: ");
+        String cargo = scanner.next();
+        List<Funcionario> funcionarios = funcionarioRepository.findByCargoDescricao(cargo);
+        funcionarios.forEach(System.out::println);
+    }
+    public void buscarFuncionarioPorUnidadeDeTrabalho(Scanner scanner){
+        System.out.println("Digite a descricao da unidade de trabalho: ");
+        String descricao = scanner.next();
+        List<Funcionario> funcionarios = funcionarioRepository.findByUnidadesDeTrabalho_Descricao(descricao);
         funcionarios.forEach(System.out::println);
     }
 
