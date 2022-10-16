@@ -4,11 +4,13 @@ import com.samuel.estudojpa.model.Funcionario;
 import com.samuel.estudojpa.model.projecoes.FuncionarioProjecao;
 import com.samuel.estudojpa.model.projecoes.FuncionarioProjecaoDto;
 import com.samuel.estudojpa.repository.FuncionarioRepository;
+import com.samuel.estudojpa.specifications.FuncionarioSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,6 +44,7 @@ public class RelatoriosService {
             System.out.println("11 - Pesquisar funcionarios por unidade de trabalho.");
             System.out.println("12 - Pesquisar funcionarios com filtro de id, nome e salario.");
             System.out.println("13 - Pesquisar funcionarios com filtro de nome e cpf.");
+            System.out.println("14 - Pesquisar funcionarios pelo nome usando specification");
 
             int acao = scanner.nextInt();
 
@@ -85,6 +88,9 @@ public class RelatoriosService {
                 case 13:
                     buscarTodosOsFuncionariosComFiltroDeNomeECpf();
                     break;
+                case 14:
+                    buscarFuncionarioPeloNomeUsandoSpecification(scanner);
+                    break;
                 default:
                     system = false;
             }
@@ -104,51 +110,59 @@ public class RelatoriosService {
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioPorParteDoNome(Scanner scanner){
+    public void buscarFuncionarioPeloNomeUsandoSpecification(Scanner scanner) {
+        System.out.println("Digite o nome: ");
+        String nome = scanner.next();
+        List<Funcionario> funcionarios = funcionarioRepository.findAll(Specification.where(FuncionarioSpecification.nome(nome)));
+        funcionarios.forEach(System.out::println);
+    }
+
+    public void buscarFuncionarioPorParteDoNome(Scanner scanner) {
         System.out.println("Digite parte do nome que deseja pesquisar: ");
-        String nome = "%"+scanner.next()+"%";
+        String nome = "%" + scanner.next() + "%";
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeLike(nome);
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioQueTerminaCom(Scanner scanner){
+    public void buscarFuncionarioQueTerminaCom(Scanner scanner) {
         System.out.println("Digite parte final do nome que deseja pesquisar: ");
         String nome = scanner.next();
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeEndingWith(nome);
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioQueComecaCom(Scanner scanner){
+    public void buscarFuncionarioQueComecaCom(Scanner scanner) {
         System.out.println("Digite parte inicial do nome que deseja pesquisar: ");
         String nome = scanner.next();
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeStartingWith(nome);
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioComNomeNulo(){
+    public void buscarFuncionarioComNomeNulo() {
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeIsNull();
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioComNomeNaoNulo(){
+    public void buscarFuncionarioComNomeNaoNulo() {
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeIsNotNull();
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioPorNomeEOrdenarPorDataDeContratacao(Scanner scanner){
+    public void buscarFuncionarioPorNomeEOrdenarPorDataDeContratacao(Scanner scanner) {
         System.out.println("Digite o nome que deseja pesquisar: ");
         String nome = scanner.next();
         List<Funcionario> funcionarios = funcionarioRepository.findByNomeOrderByDataContratacaoAsc(nome);
         funcionarios.forEach(System.out::println);
     }
 
-    public void buscarFuncionarioPorCargo(Scanner scanner){
+    public void buscarFuncionarioPorCargo(Scanner scanner) {
         System.out.println("Digite o cargo: ");
         String cargo = scanner.next();
         List<Funcionario> funcionarios = funcionarioRepository.findByCargoDescricao(cargo);
         funcionarios.forEach(System.out::println);
     }
-    public void buscarFuncionarioPorUnidadeDeTrabalho(Scanner scanner){
+
+    public void buscarFuncionarioPorUnidadeDeTrabalho(Scanner scanner) {
         System.out.println("Digite a descricao da unidade de trabalho: ");
         String descricao = scanner.next();
         List<Funcionario> funcionarios = funcionarioRepository.findByUnidadesDeTrabalho_Descricao(descricao);
@@ -187,5 +201,6 @@ public class RelatoriosService {
         List<FuncionarioProjecaoDto> funcionarios = funcionarioRepository.findFuncionarioPorNomeECpf();
         funcionarios.forEach(e -> System.out.println(" nome: " + e.getNome() + " cpf: " + e.getCpf()));
     }
+
 
 }

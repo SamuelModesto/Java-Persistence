@@ -2,10 +2,7 @@ package com.samuel.estudojpa;
 
 import com.samuel.estudojpa.model.Cargo;
 import com.samuel.estudojpa.repository.CargoRepository;
-import com.samuel.estudojpa.service.CargoService;
-import com.samuel.estudojpa.service.FuncionarioService;
-import com.samuel.estudojpa.service.RelatoriosService;
-import com.samuel.estudojpa.service.UnidadeDeTrabalhoService;
+import com.samuel.estudojpa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +24,9 @@ public class EstudojpaApplication implements CommandLineRunner {
     @Autowired
     private RelatoriosService relatoriosService;
 
+    @Autowired
+    private RelatorioSpecificationService relatorioSpecificationService;
+
     Boolean system = true;
 
     public static void main(String[] args) {
@@ -44,6 +44,7 @@ public class EstudojpaApplication implements CommandLineRunner {
             System.out.println("2 - Unidades De Trabalho");
             System.out.println("3 - Funcionarios");
             System.out.println("4 - Relatorios");
+            System.out.println("5 - Relatorios dinamicos");
 
             int acao = scanner.nextInt();
 
@@ -59,6 +60,9 @@ public class EstudojpaApplication implements CommandLineRunner {
                     break;
                 case 4:
                     relatoriosService.menuInicial(scanner);
+                    break;
+                case 5:
+                    relatorioSpecificationService.menuInicial(scanner);
                     break;
                 case 0:
                     system = false;
