@@ -5,6 +5,7 @@ public class FuncionarioProjecaoDto {
     private String nome;
     private String cpf;
 
+    //Parametros do construtor devem ser na mesma ordem da JPQL.
     public FuncionarioProjecaoDto(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
